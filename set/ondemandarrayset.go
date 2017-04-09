@@ -1,5 +1,3 @@
-// https://github.com/karlseguin/golang-set-fun/blob/master/ondemandarrayset.go
-
 package set
 
 type OnDemandArraySet struct {
