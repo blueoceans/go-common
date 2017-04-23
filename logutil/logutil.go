@@ -26,18 +26,6 @@ func Infof(c appengine.Context, format string, args ...interface{}) {
 	c.Infof(sprintf(format, args...))
 }
 
-func Warningf(c appengine.Context, format string, args ...interface{}) {
-	c.Warningf(sprintf(format, args...))
-}
-
-func Errorf(c appengine.Context, format string, args ...interface{}) {
-	c.Errorf(sprintf(format, args...))
-}
-
-func Criticalf(c appengine.Context, format string, args ...interface{}) {
-	c.Criticalf(sprintf(format, args...))
-}
-
 func ErrorStackTracef(c appengine.Context, format string, args ...interface{}) {
 	c.Errorf(sprintf("%s", StackTrace(2, 2048)))
 	c.Errorf(sprintf(format, args...))
