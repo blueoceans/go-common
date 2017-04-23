@@ -10,11 +10,7 @@ import (
 	"unicode/utf8"
 )
 
-const (
-	apiErrorStringBase  = "Code: %d, Detail: %s, Service: %s"
-	callErrorStringBase = "Code: %d, Detail: %s, Timeout: %t"
-	unknownErrorString  = "Unknown Error"
-)
+const ()
 
 func sprintf(format string, args ...interface{}) string {
 	_, file, line, _ := runtime.Caller(2)
