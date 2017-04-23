@@ -1,4 +1,4 @@
-// +build appengine
+// +build !appengine
 
 package logutil
 
@@ -8,9 +8,6 @@ import (
 	"io"
 	"runtime"
 	"unicode/utf8"
-
-	"appengine"
-	"appengine_internal"
 )
 
 const (
@@ -92,16 +89,4 @@ func StackTrace(skip, maxBytes int) []byte {
 	w.WriteString("\n")
 
 	return w.Bytes()
-}
-
-func AppengineErrorToString(err error) string {
-	apiErr, ok := err.(*appengine_internal.APIError)
-	if ok {
-		return fmt.Sprintf(apiErrorStringBase, apiErr.Code, apiErr.Detail, apiErr.Service)
-	}
-	callErr, ok := err.(*appengine_internal.CallError)
-	if ok {
-		return fmt.Sprintf(callErrorStringBase, callErr.Code, callErr.Detail, callErr.Timeout)
-	}
-	return unknownErrorString
 }
