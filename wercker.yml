@@ -1,0 +1,13 @@
+box: golang
+build:
+  steps:
+  - setup-go-workspace
+  - script:
+      name: build
+      code: |
+        go build ./...
+  - script:
+      name: test
+      code: |
+        go test ./...
+# - wercker/golint
