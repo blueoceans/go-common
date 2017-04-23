@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"log"
 	"runtime"
 	"unicode/utf8"
 )
@@ -18,17 +19,17 @@ func sprintf(format string, args ...interface{}) string {
 	return fmt.Sprintf("%s %s", fileLine, fmt.Sprintf(format, args...))
 }
 
-func Debugf(c appengine.Context, format string, args ...interface{}) {
-	c.Debugf(sprintf(format, args...))
+func Debugf(_ interface{}, format string, args ...interface{}) {
+	log.Printf(format, args...)
 }
 
-func Infof(c appengine.Context, format string, args ...interface{}) {
-	c.Infof(sprintf(format, args...))
+func Infof(_ interface{}, format string, args ...interface{}) {
+	log.Printf(format, args...)
 }
 
-func StackTracef(c appengine.Context, format string, args ...interface{}) {
-	c.Infof(sprintf("%s", StackTrace(2, 2048)))
-	c.Infof(sprintf(format, args...))
+func StackTracef(_ interface{}, format string, args ...interface{}) {
+	log.Printf(sprintf("%s", StackTrace(2, 2048)))
+	log.Printf(format, args...)
 }
 
 //https://github.com/knightso/base/blob/master/errors/errors.go
