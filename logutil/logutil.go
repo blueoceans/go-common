@@ -26,9 +26,9 @@ func Infof(c appengine.Context, format string, args ...interface{}) {
 	c.Infof(sprintf(format, args...))
 }
 
-func ErrorStackTracef(c appengine.Context, format string, args ...interface{}) {
-	c.Errorf(sprintf("%s", StackTrace(2, 2048)))
-	c.Errorf(sprintf(format, args...))
+func StackTracef(c appengine.Context, format string, args ...interface{}) {
+	c.Infof(sprintf("%s", StackTrace(2, 2048)))
+	c.Infof(sprintf(format, args...))
 }
 
 //https://github.com/knightso/base/blob/master/errors/errors.go
