@@ -1,4 +1,4 @@
-// +build appengine
+// +build !appengine
 
 package logutil
 
@@ -6,18 +6,12 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"log"
 	"runtime"
 	"unicode/utf8"
-
-	"appengine"
-	"appengine_internal"
 )
 
-const (
-	apiErrorStringBase  = "Code: %d, Detail: %s, Service: %s"
-	callErrorStringBase = "Code: %d, Detail: %s, Timeout: %t"
-	unknownErrorString  = "Unknown Error"
-)
+const ()
 
 func sprintf(format string, args ...interface{}) string {
 	_, file, line, _ := runtime.Caller(2)
@@ -25,29 +19,17 @@ func sprintf(format string, args ...interface{}) string {
 	return fmt.Sprintf("%s %s", fileLine, fmt.Sprintf(format, args...))
 }
 
-func Debugf(c appengine.Context, format string, args ...interface{}) {
-	c.Debugf(sprintf(format, args...))
+func Debugf(_ interface{}, format string, args ...interface{}) {
+	log.Printf(format, args...)
 }
 
-func Infof(c appengine.Context, format string, args ...interface{}) {
-	c.Infof(sprintf(format, args...))
+func Infof(_ interface{}, format string, args ...interface{}) {
+	log.Printf(format, args...)
 }
 
-func Warningf(c appengine.Context, format string, args ...interface{}) {
-	c.Warningf(sprintf(format, args...))
-}
-
-func Errorf(c appengine.Context, format string, args ...interface{}) {
-	c.Errorf(sprintf(format, args...))
-}
-
-func Criticalf(c appengine.Context, format string, args ...interface{}) {
-	c.Criticalf(sprintf(format, args...))
-}
-
-func ErrorStackTracef(c appengine.Context, format string, args ...interface{}) {
-	c.Errorf(sprintf("%s", StackTrace(2, 2048)))
-	c.Errorf(sprintf(format, args...))
+func StackTracef(_ interface{}, format string, args ...interface{}) {
+	log.Printf(sprintf("%s", StackTrace(2, 2048)))
+	log.Printf(format, args...)
 }
 
 //https://github.com/knightso/base/blob/master/errors/errors.go
@@ -92,16 +74,4 @@ func StackTrace(skip, maxBytes int) []byte {
 	w.WriteString("\n")
 
 	return w.Bytes()
-}
-
-func AppengineErrorToString(err error) string {
-	apiErr, ok := err.(*appengine_internal.APIError)
-	if ok {
-		return fmt.Sprintf(apiErrorStringBase, apiErr.Code, apiErr.Detail, apiErr.Service)
-	}
-	callErr, ok := err.(*appengine_internal.CallError)
-	if ok {
-		return fmt.Sprintf(callErrorStringBase, callErr.Code, callErr.Detail, callErr.Timeout)
-	}
-	return unknownErrorString
 }
