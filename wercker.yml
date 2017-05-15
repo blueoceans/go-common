@@ -16,4 +16,4 @@ build:
       code: |
         go test ./...
   - wercker/golint:
-      exclude: "vendor/"
+      exclude: "^(vendor|logutil|set)/"
