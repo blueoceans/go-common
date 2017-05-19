@@ -4,18 +4,14 @@ import (
 	"time"
 )
 
-var (
-	token = Token{}
+const (
+	token byte = 00
 )
 
-// Token is a bit in the token-bucket.
-type Token struct {
-}
-
 // NewTokenBucket returns a new token-bucket.
-func NewTokenBucket(rate time.Duration, size uint16) chan Token {
+func NewTokenBucket(rate time.Duration, size uint16) chan byte {
 	sizeInt := int(size)
-	bucket := make(chan Token, sizeInt)
+	bucket := make(chan byte, sizeInt)
 	for { //put token
 		if len(bucket) < sizeInt {
 			bucket <- token
@@ -24,7 +20,7 @@ func NewTokenBucket(rate time.Duration, size uint16) chan Token {
 		break
 	}
 
-	go func(bucket chan<- Token) {
+	go func(bucket chan<- byte) {
 		tick := time.NewTicker(rate)
 		for _ = range tick.C {
 			if len(bucket) < sizeInt {
