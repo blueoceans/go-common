@@ -15,8 +15,7 @@ func NewTokenBucket(rate time.Duration, size uint16) chan byte {
 	fillBucket(bucket, sizeInt)
 
 	go func(bucket chan<- byte) {
-		tick := time.NewTicker(rate)
-		for _ = range tick.C {
+		for _ = range time.NewTicker(rate).C {
 			fillBucket(bucket, sizeInt)
 		}
 	}(bucket)
