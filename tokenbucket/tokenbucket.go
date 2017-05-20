@@ -12,22 +12,20 @@ const (
 func NewTokenBucket(rate time.Duration, size uint16) chan byte {
 	sizeInt := int(size)
 	bucket := make(chan byte, sizeInt)
-	for { //put token
-		if len(bucket) < sizeInt {
-			bucket <- token
-			continue
-		}
-		break
-	}
+	fillBucket(bucket, sizeInt)
 
 	go func(bucket chan<- byte) {
 		tick := time.NewTicker(rate)
 		for _ = range tick.C {
-			if len(bucket) < sizeInt {
-				bucket <- token
-			}
+			fillBucket(bucket, sizeInt)
 		}
 	}(bucket)
 
 	return bucket
+}
+
+func fillBucket(bucket chan<- byte, size int) {
+	for i := size - len(bucket); i > 0; i-- {
+		bucket <- token
+	}
 }
