@@ -4,17 +4,13 @@ import (
 	"time"
 )
 
-const (
-	token byte = 00
-)
-
 // NewTokenBucket returns a new token-bucket.
-func NewTokenBucket(rate time.Duration, size uint16) chan byte {
+func NewTokenBucket(rate time.Duration, size uint16) chan struct{} {
 	sizeInt := int(size)
-	bucket := make(chan byte, sizeInt)
+	bucket := make(chan struct{}, sizeInt)
 	fillBucket(bucket, sizeInt)
 
-	go func(bucket chan<- byte) {
+	go func(bucket chan<- struct{}) {
 		for _ = range time.NewTicker(rate).C {
 			fillBucket(bucket, sizeInt)
 		}
@@ -23,8 +19,8 @@ func NewTokenBucket(rate time.Duration, size uint16) chan byte {
 	return bucket
 }
 
-func fillBucket(bucket chan<- byte, size int) {
+func fillBucket(bucket chan<- struct{}, size int) {
 	for i := size - len(bucket); i > 0; i-- {
-		bucket <- token
+		bucket <- struct{}{}
 	}
 }
