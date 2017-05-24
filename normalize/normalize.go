@@ -30,5 +30,6 @@ func URI(
 		}
 	}
 
+	uri.User = nil
 	return uri.String(), nil
 }
