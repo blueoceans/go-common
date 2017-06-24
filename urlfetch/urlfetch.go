@@ -6,11 +6,11 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"strings"
 	"time"
 
 	"appengine"
 	"appengine/urlfetch"
+	"github.com/blueoceans/go-common/errors"
 	u "github.com/blueoceans/go-common/logutil"
 )
 
@@ -123,28 +123,12 @@ retry:
 func IsErrNoWait(
 	err error,
 ) bool {
-	return containsErrorMessage(err, errNoWait)
+	return errors.ContainsErrorMessage(err, errNoWait)
 }
 
 // IsErrWait returns is whether it must wait for next re-try or not.
 func IsErrWait(
 	err error,
 ) bool {
-	return containsErrorMessage(err, errWait)
-}
-
-func containsErrorMessage(
-	err error,
-	messages []string,
-) bool {
-	if err == nil {
-		return false
-	}
-	errorMessage := err.Error()
-	for _, message := range messages {
-		if strings.Contains(errorMessage, message) {
-			return true
-		}
-	}
-	return false
+	return errors.ContainsErrorMessage(err, errWait)
 }
