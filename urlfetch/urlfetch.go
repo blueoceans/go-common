@@ -17,6 +17,12 @@ import (
 const (
 	reasonDeadlineExceededTimeout = "Deadline exceeded (timeout)"
 
+	reasonUrlfetch = "urlfetch:"
+
+	reasonUrlfetchDNSErr            = "urlfetch: DNS_ERROR"
+	reasonUrlfetchInvalidURL        = "urlfetch: INVALID_URL"
+	reasonUrlfetchSSLCertificateErr = "urlfetch: SSL_CERTIFICATE_ERROR"
+
 	reasonUrlfetchClosed               = "urlfetch: CLOSED"
 	reasonUrlfetchConnectionErr        = "urlfetch: CONNECTION_ERROR"
 	reasonUrlfetchDeadlineExceeded     = "urlfetch: DEADLINE_EXCEEDED"
