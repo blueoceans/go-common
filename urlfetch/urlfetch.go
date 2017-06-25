@@ -15,23 +15,24 @@ import (
 )
 
 const (
+	reasonDeadlineExceededTimeout = "Deadline exceeded (timeout)"
+
 	reasonUrlfetchClosed               = "urlfetch: CLOSED"
-	reasonUrlfetchFetchErr             = "urlfetch: FETCH_ERROR"
 	reasonUrlfetchConnectionErr        = "urlfetch: CONNECTION_ERROR"
-	reasonUrlfetchInternalTransientErr = "urlfetch: INTERNAL_TRANSIENT_ERROR"
 	reasonUrlfetchDeadlineExceeded     = "urlfetch: DEADLINE_EXCEEDED"
-	reasonDeadlineExceededTimeout      = "Deadline exceeded (timeout)"
+	reasonUrlfetchFetchErr             = "urlfetch: FETCH_ERROR"
+	reasonUrlfetchInternalTransientErr = "urlfetch: INTERNAL_TRANSIENT_ERROR"
 
 	sec1 = 1 * time.Second
 )
 
 var (
 	errNoWait = []string{
+		reasonDeadlineExceededTimeout,
 		reasonUrlfetchClosed,
-		reasonUrlfetchFetchErr,
 		reasonUrlfetchConnectionErr,
 		reasonUrlfetchDeadlineExceeded,
-		reasonDeadlineExceededTimeout,
+		reasonUrlfetchFetchErr,
 	}
 	errWait = []string{
 		reasonUrlfetchInternalTransientErr,
