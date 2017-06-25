@@ -45,6 +45,20 @@ var (
 	}
 )
 
+// IsErrNoWait returns is whether it can re-try soon or not.
+func IsErrNoWait(
+	err error,
+) bool {
+	return errors.ContainsErrorMessage(err, errNoWait)
+}
+
+// IsErrWait returns is whether it must wait for next re-try or not.
+func IsErrWait(
+	err error,
+) bool {
+	return errors.ContainsErrorMessage(err, errWait)
+}
+
 func ClientGet(
 	c appengine.Context,
 	url string,
@@ -124,18 +138,4 @@ retry:
 	default:
 		return nil, err
 	}
-}
-
-// IsErrNoWait returns is whether it can re-try soon or not.
-func IsErrNoWait(
-	err error,
-) bool {
-	return errors.ContainsErrorMessage(err, errNoWait)
-}
-
-// IsErrWait returns is whether it must wait for next re-try or not.
-func IsErrWait(
-	err error,
-) bool {
-	return errors.ContainsErrorMessage(err, errWait)
 }
