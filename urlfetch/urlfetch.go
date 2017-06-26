@@ -45,6 +45,13 @@ var (
 	}
 )
 
+// IsUrlfetchErr returns is whether it is `urlfetch` error or not.
+func IsUrlfetchErr(
+	err error,
+) bool {
+	return errors.ContainsErrorMessage(err, []string{reasonUrlfetch})
+}
+
 // IsErrNoWait returns is whether it can re-try soon or not.
 func IsErrNoWait(
 	err error,
