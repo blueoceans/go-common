@@ -10,6 +10,8 @@ var vtests = []struct {
 }{
 	{"http://example.com/",
 		"http://example.com/"},
+	{"http://example.com",
+		"http://example.com/"},
 	{"https://example.com/index.html",
 		"https://example.com/index.html"},
 	{"http://example.com:80/",
@@ -22,12 +24,12 @@ var vtests = []struct {
 		"http://example.com:443/"},
 	{"https://example.com:80/",
 		"https://example.com:80/"},
-	{"http://user@example.com",
-		"http://example.com"},
-	{"http://:pass@example.com",
-		"http://example.com"},
-	{"http://user:pass@example.com",
-		"http://example.com"},
+	{"http://user@example.com/",
+		"http://example.com/"},
+	{"http://:pass@example.com/",
+		"http://example.com/"},
+	{"http://user:pass@example.com/",
+		"http://example.com/"},
 }
 
 func TestURI(t *testing.T) {
