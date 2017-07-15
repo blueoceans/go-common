@@ -30,6 +30,10 @@ func URI(
 		}
 	}
 
+	if uri.Path == "" {
+		uri.Path = "/"
+	}
+
 	uri.User = nil
 	return uri.String(), nil
 }
