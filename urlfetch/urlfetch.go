@@ -123,6 +123,16 @@ func ClientPostForm(
 	)
 }
 
+func ClientDo(
+	c appengine.Context,
+	do func() (*http.Response, error),
+) (
+	*http.Response,
+	error,
+) {
+	return clientDo(c, do)
+}
+
 func clientDo(
 	c appengine.Context,
 	do func() (*http.Response, error),
